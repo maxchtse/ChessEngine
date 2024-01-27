@@ -1,0 +1,72 @@
+"""
+This is the main driver file. It is used to display current game state and to handle user input
+"""
+
+import pygame as p
+import chessEngine  
+
+
+WIDTH = HEIGHT  = 512
+DIMENSION = 8
+SQ_SIZE = HEIGHT // DIMENSION
+MAX_FPS = 15 
+IMAGE = {}
+
+"""
+Initialize a global dir of images.
+"""
+
+def loadImages():
+    pieces = ["bR", "bN", "bB", "bQ", "bK", "bp", "wR", "wN", "wB", "wQ", "wK", "wp"]
+    for piece in pieces:
+        IMAGE[piece] = p.transform.scale(p.image.load("assets/" + piece + ".png"), (SQ_SIZE, SQ_SIZE))
+        # Note: access image by typing 'IMAGES['wp']'
+
+"""
+The main driver for the code. This will handle user input and update the graphics
+"""
+
+def main():
+    p.init()
+    screen = p.display.set_mode((WIDTH, HEIGHT))
+    clock = p.time.Clock()
+    screen.fill(p.Color('white'))
+    gs = chessEngine.GameState()
+    loadImages()
+    running = True
+    while running:
+        for e in p.event.get():
+            if e.type == p.QUIT:
+                running = False
+        drawGameState(screen, gs)
+        clock.tick(MAX_FPS)
+        p.display.flip()
+        
+
+"""
+These methods are for all the graphics within a game current state
+"""
+def drawGameState(screen, gs):
+    drawBoard(screen) #Draw squares on the board
+    drawPieces(screen) #Draw pieces on top of those squares
+
+
+"""
+Draw squares on the board. The top left square is always light
+"""
+def drawBoard(screen):
+    colors = [p.Color("white"), p.Color("gray")]
+    for r in range(DIMENSION):
+        for c in range(DIMENSION):
+            color = colors[((r+c)%2)]
+            p.draw.rect(screen, color, p.Rect(c*SQ_SIZE, r*SQ_SIZE, SQ_SIZE, SQ_SIZE))
+
+
+"""
+Draw pieces on the board using the current GameState.board
+"""
+def drawPieces(screen):
+    pass
+
+if __name__ == "__main__":
+    main()

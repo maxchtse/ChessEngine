@@ -1,11 +1,23 @@
 """
-This is a multi-line comment with docstrings
-
-print("Hello world")
-print("Hello universe")
-print("Hello everyone")
+This is the main driver file. It is used to store all info about current game state, determining valid moves of chess and to keep a move log
 """
 
-print("Hello everyone")
-
-print("Hello everyone")
+class GameState():
+    def __init__(self):
+        # Create a 8x8 board
+        # First char of the string represents the color of the piece
+        # Second char of the string represent the type of the piece
+        # "--" represents an empty space with no piece
+        self.board = [
+            ["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"],
+            ["bp", "bp", "bp", "bp", "bp", "bp", "bp", "bp"],
+            ["--", "--", "--", "--", "--", "--", "--", "--"],
+            ["--", "--", "--", "--", "--", "--", "--", "--"],
+            ["--", "--", "--", "--", "--", "--", "--", "--"],
+            ["--", "--", "--", "--", "--", "--", "--", "--"],
+            ["--", "--", "--", "--", "--", "--", "--", "--"],
+            ["wp", "wp", "wp", "wp", "wp", "wp", "wp", "wp"],
+            ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"],
+        ]
+        self.whiteToMove = True
+        self.moveLog = []
