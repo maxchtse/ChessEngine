@@ -34,6 +34,11 @@ def main():
     gs = chessEngine.GameState()
     loadImages()
     running = True
+
+    # Keep track of the last selected location from the user (tuple: (row, col))
+    sqSelected = () # No square is selected originally
+    sqClicked = [] # Keep track of the user click (two tuple:[(6,4), (4,4)])
+
     while running:
         for e in p.event.get():
             if e.type == p.QUIT:
@@ -42,6 +47,11 @@ def main():
                 location = p.mouse.get_pos()  # Return (x,y) location of the mouse
                 col = location[0]//SQ_SIZE
                 row = location[1]//SQ_SIZE
+                # Play undo the selection logic
+                if sqClicked == (row, col):
+                    sqSelected = () # Change the square selected back
+                    sqClicked = [] # Clear player click
+                sqSelected = (row, col)
         drawGameState(screen, gs)
         clock.tick(MAX_FPS)
         p.display.flip()
