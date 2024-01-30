@@ -22,6 +22,14 @@ class GameState():
         self.moveLog = []
 
 class Move():
+    # maps keys to values
+    # key : value
+    # The origin (0, 0) is at the top-left corner
+    ranksToRows = {"1": 7, "2": 6, "3": 5, "4": 4, "5": 3, "6": 2, "7": 1, "8": 0}
+    filesToCols = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h": 7}
+    # Reverse the tuple
+    rowsToRanks = {v: k for k, v in ranksToRows.items()}
+    colsToFiles = {v: k for k, v in filesToCols.items()}
 
     def __init__(self, startSq, endSq, board):
         self.startRow = startSq[0]
