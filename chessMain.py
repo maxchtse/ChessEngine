@@ -38,6 +38,10 @@ def main():
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
+            elif e.type == p.MOUSEBUTTONDOWN:
+                location = p.mouse.get_pos()  # Return (x,y) location of the mouse
+                col = location[0]//SQ_SIZE
+                row = location[1]//SQ_SIZE
         drawGameState(screen, gs)
         clock.tick(MAX_FPS)
         p.display.flip()
@@ -48,14 +52,14 @@ These methods are for all the graphics within a game current state
 """
 def drawGameState(screen, gs):
     drawBoard(screen) #Draw squares on the board
-    drawPieces(screen) #Draw pieces on top of those squares
+    drawPieces(screen, gs.board) #Draw pieces on top of those squares
 
 
 """
 Draw squares on the board. The top left square is always light
 """
 def drawBoard(screen):
-    colors = [p.Color("white"), p.Color("gray")]
+    colors = [p.Color(255,248,220), p.Color(221,138,60)]
     for r in range(DIMENSION):
         for c in range(DIMENSION):
             color = colors[((r+c)%2)]
@@ -65,8 +69,12 @@ def drawBoard(screen):
 """
 Draw pieces on the board using the current GameState.board
 """
-def drawPieces(screen):
-    pass
+def drawPieces(screen, board):
+    for r in range(DIMENSION):
+        for c in range(DIMENSION):
+            piece = board[r][c]
+            if piece != "--": #not empty square
+                screen.blit(IMAGE[piece], p.Rect(c*SQ_SIZE, r*SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
 if __name__ == "__main__":
     main()
